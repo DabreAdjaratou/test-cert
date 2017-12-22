@@ -267,10 +267,39 @@ class WrittenExamTable extends AbstractTableGateway {
             $examination = $res['examination'];
         }
 
-        $sql2 = 'UPDATE examination SET id_written_exam=null WHERE id='.$examination;
-        $db->getDriver()->getConnection()->execute($sql2);
+         $sql4 = 'select id_written_exam,practical_exam_id from examination where id=' . $examination;
+        $statement4 = $db->query($sql4);
+        $result4 = $statement4->execute();
+        foreach ($result4 as $res4) {
+            $id_written_exam = $res4['id_written_exam'];
+            $practical_exam_id = $res4['practical_exam_id'];
+        }
+        if (empty($practical_exam_id)) {
+            $sql2 = 'delete from examination WHERE id=' . $examination;
+            $db->getDriver()->getConnection()->execute($sql2);
+        } else {
+            $sql2 = 'UPDATE examination SET id_written_exam=null WHERE id=' . $examination;
+            $db->getDriver()->getConnection()->execute($sql2);
+        }
         $sql3 = 'Delete from written_exam where id_written_exam='.$id_written_exam;
         $db->getDriver()->getConnection()->execute($sql3);
+        
+        
+        
+      
+    }
+    
+public function examToValidate($provider){
+         $db = $this->tableGateway->getAdapter();
+        $sql = 'SELECT count(*) as nombre FROM examination WHERE id_written_exam is not null and practical_exam_id is not null and add_to_certification="no" and provider='.$provider;
+//        die($sql);
+        $statement = $db->query($sql);
+        $result = $statement->execute();
+        foreach ($result as $res) {
+            $nombre = $res['nombre'];
+        }
+//        die($nombre);
+        return $nombre;
     }
 
 }

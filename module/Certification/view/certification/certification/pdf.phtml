@@ -41,7 +41,7 @@ $pdf->SetFont('times', '', 20);
 $pdf->setFontSubsetting(false);
 // remove default header
 $pdf->setPrintHeader(false);
-//$pdf->SetMargins(10, 20, 10, true);
+$pdf->SetMargins(10, 20, 10, true);
 // add a page
 $pdf->AddPage('L', 'A4');
 
@@ -81,14 +81,12 @@ $pdf->writeHTMLCell(0, 0, 10, 92, $text_content, 0, 0, 0, true, 'J', true);
 
 $img_file = dirname(__CLASS__) . 'public/assets/img/logo_cert1.png';
 $img_file2 = dirname(__CLASS__) . 'public/assets/img/logo_cert2.png';
-//$img_file3 = dirname(__CLASS__).'public/assets/img/logo_cert3.png';
 
 $pdf->Image($img_file, 20, 35, 50, 35, '', '', '', false, 300, '', false, false, 0);
 
 $pdf->Image($img_file2, 225, 35, 50, 35, '', '', '', false, 300, '', false, false, 0);
 
-//$pdf->Image($img_file3,225, 150, 50, 35, '', '', '', false, 300, '', false, false, 0);
-//---------------------------------------------------------
+///---------------------------------------------------------
 //Close and output PDF document
 $pdf->Output(ucfirst($last) . ' ' . ucfirst($first) . ' ' . ucfirst($middle) . '_HIVRT Certification_' . date('Y') . '.pdf', 'I');
 exit;

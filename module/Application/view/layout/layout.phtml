@@ -155,7 +155,8 @@ if (isset($acl) && $acl->isAllowed($role, "Application\Controller\SpiV3", "index
                         <ul class="nav navbar-nav am-nav-right">
                             <li><a href="/" style="font-size:1.8em;">Dashboard for Quality Improvement of HIV Rapid Testing</a></li>
                         </ul>
-
+                        
+                                <!--the flashing buttons-->
                         <?php
                         if (!empty($nb) && $nb > 0) {
                             if (isset($acl) && $acl->isAllowed($role, "Certification\Controller\Certification", "index")) {

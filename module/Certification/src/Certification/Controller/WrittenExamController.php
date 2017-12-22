@@ -43,6 +43,11 @@ class WrittenExamController extends AbstractActionController {
             $form->setData($request->getPost());
             $practical = $request->getPost('practical', null);
             $provider_id = $this->getRequest()->getPost('provider_id');
+            $exam_to_val = $this->getWrittenExamTable()->examToValidate($provider_id);
+            if ($exam_to_val > 0) {
+                $container->alertMsg = 'This tester has a review pending validation. you must first validate it in the Examination tab.';
+                return $this->redirect()->toRoute('written-exam', array('action' => 'add'));
+            }
             $written = $this->getWrittenExamTable()->counWritten($provider_id);
 
             $nb_days = $this->getWrittenExamTable()->numberOfDays($provider_id);

@@ -44,6 +44,11 @@ class PracticalExamController extends AbstractActionController {
             $written = $request->getPost('written', null);
 //            $written=$_POST['written'];
             $provider_id = $this->getRequest()->getPost('provider_id');
+            $exam_to_val = $this->getPracticalExamTable()->examToValidate($provider_id);
+            if ($exam_to_val > 0) {
+                $container->alertMsg = 'This tester has a review pending validation. you must first validate it in the Examination tab.';
+                return $this->redirect()->toRoute('practical-exam', array('action' => 'add'));
+            }
             $practical_nb = $this->getPracticalExamTable()->counPractical($provider_id);
             $nb_days = $this->getPracticalExamTable()->numberOfDays($provider_id);
             if (isset($nb_days) && $nb_days <= 30) {
@@ -130,8 +135,8 @@ class PracticalExamController extends AbstractActionController {
             'practice_exam_id' => $practice_exam_id,
             'form' => $form,
             'attemptNumber' => $attemptNumber,
-            'provider_id'=>$provider['id'],
-            'provider_name'=>$provider['name'],
+            'provider_id' => $provider['id'],
+            'provider_name' => $provider['name'],
         );
     }
 
@@ -162,4 +167,5 @@ class PracticalExamController extends AbstractActionController {
             }
         }
     }
+
 }
